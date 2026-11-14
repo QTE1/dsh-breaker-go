@@ -1,13 +1,11 @@
 # dsh-breaker-go 破甲插件 —— bundle 装配层
 #
-# 只做两件事：清掉官方身份句（腾出注入位置），插入自己的运行时节点。
-# 与宿主补丁（lib/patches.js）配合：补丁拆闸，注入改态度。
-
-- id: system-prompt
-  config:
-    includeHarnessIdentity: false
-    personaPrefix: ""
-    personaSuffix: ""
+# 0.2.1：**不再覆盖 system-prompt 节点**。
+# 覆盖 includeHarnessIdentity / personaPrefix 会在部分宿主上打断装配，
+# 表现就是「装上插件后无法对话」。身份剥离交回注入层做，代价只是多几百字节。
+#
+# 这里只插入自己的运行时节点，且所有拆闸层默认关闭：
+# 先用纯注入确认能跑，再按需逐层打开（见 README 的排障一节）。
 
 - insert:
     - id: dsh-breaker-go
@@ -17,6 +15,6 @@
         enabled: true
         injectPosition: head
         boost: true
-        runtime: true
-        restick: true
+        runtime: false
+        restick: false
         postPrompt: ""
