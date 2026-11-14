@@ -1,0 +1,22 @@
+# dsh-breaker-go 破甲插件 —— bundle 装配层
+#
+# 只做两件事：清掉官方身份句（腾出注入位置），插入自己的运行时节点。
+# 与宿主补丁（lib/patches.js）配合：补丁拆闸，注入改态度。
+
+- id: system-prompt
+  config:
+    includeHarnessIdentity: false
+    personaPrefix: ""
+    personaSuffix: ""
+
+- insert:
+    - id: dsh-breaker-go
+      name: 'dsh-breaker-go'
+      inject: [systemPrompt]
+      config:
+        enabled: true
+        injectPosition: head
+        boost: true
+        runtime: true
+        restick: true
+        postPrompt: ""
