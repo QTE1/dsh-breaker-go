@@ -1,0 +1,51 @@
+{
+  "name": "dsh-breaker-go",
+  "version": "0.2.0",
+  "description": "DSH 破甲插件（dsh-go 适配版）：运行时拆闸 + 提示词注入 + 每步重贴 + 原生状态条",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": { "breaker": "bin/breaker.js" },
+  "files": ["lib", "bin", "cordis.patch.yml", "README.md", "LICENSE"],
+  "engines": {
+    "node": ">=18",
+    "dsh": ">=0.2.1-rc.2 <0.3.0-0"
+  },
+  "license": "MIT",
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "compatibility": {
+      "dsh": ">=0.2.1-rc.1 <0.3.0",
+      "profiles": ["web", "desktop"],
+      "dshReleases": {
+        "0.2.1-rc.1": "unknown",
+        "0.2.1-rc.2": "compatible",
+        "0.2.1-rc.3": "compatible",
+        "0.2.2-rc.1": "compatible",
+        "0.2.2-rc.2": "compatible"
+      }
+    }
+  },
+  "dshGo": {
+    "v": 1,
+    "title": { "zh": "破甲", "en": "Breaker" },
+    "icon": "wrench",
+    "contributes": {
+      "composer.strip": [
+        { "id": "breaker-status", "icon": "bolt", "panel": "breaker-panel" }
+      ],
+      "panels": [
+        {
+          "id": "breaker-panel",
+          "title": { "zh": "破甲状态", "en": "Breaker" },
+          "icon": "wrench",
+          "placement": ["session.tab", "features", "chat.panel"]
+        }
+      ]
+    }
+  },
+  "peerDependencies": { "@deepseek-ai/cordis": "^4.0.1" }
+}
